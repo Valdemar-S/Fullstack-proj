@@ -19,7 +19,9 @@ export default function DepartmentsTable({ departments }) {
   useEffect(() => {
     axios("http://localhost:5000/department")
       .then((res) => {
+        
         setData(res.data);
+        console.log(data)
       })
       .catch((err) => console.log(err))
       .finally((_) => {
@@ -105,9 +107,8 @@ export default function DepartmentsTable({ departments }) {
           </tr>
         </thead>
         <tbody>
-          {loading &&
-            data.map((row) => {
-              <tr>
+          {data.map((row) => {
+              return <tr>
                 <td>{row.id}</td>
                 <td>{row.name}</td>
                 <td>{row.head}</td>
