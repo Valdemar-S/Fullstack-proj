@@ -11,8 +11,8 @@ const AddDepUser = () => {
   const saveDepUser = async (e) => {
     e.preventDefault();
     await axios.post(`http://localhost:5000/department`, {
-      department_name: name,
-      department_head: head,
+      name: name,
+      head: head,
     });
     navigate("/");
   };

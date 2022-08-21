@@ -4,12 +4,12 @@ import db from "../config/database.js";
 const { DataTypes } = Sequelize;
 
 const DepUsers = db.define(
-  "department_head",
+  "departments",
   {
-    department_name: {
+    name: {
       type: DataTypes.STRING,
     },
-    department_head: {
+    head: {
       type: DataTypes.STRING,
     },
   },

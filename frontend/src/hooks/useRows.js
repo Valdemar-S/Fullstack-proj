@@ -13,23 +13,23 @@ export default function useRows() {
     () => [
       {
         id: 12,
-        department_name: "Use Name",
-        department_head: "User Head",
+        name: "Use Name",
+        head: "User Head",
       },
       {
         id: 17,
-        department_name: "Name",
-        department_head: "Head",
+        name: "Name",
+        head: "Head",
       },
       {
         id: 19,
-        department_name: "person",
-        department_head: "human",
+        name: "person",
+        head: "human",
       },
       {
         id: 34,
-        department_name: "testName",
-        department_head: "testHead",
+        name: "testName",
+        dhead: "testHead",
       },
     ],
     []

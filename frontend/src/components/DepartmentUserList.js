@@ -104,7 +104,7 @@ export default function DepUserList({ columns, data }) {
                       onClick={() => {
                         if (
                           window.confirm(
-                            `Are you sure you wish to delete ${row.department_name} ?`
+                            `Are you sure you wish to delete ${row.name} ?`
                           )
                         )
                           deleteDepUser(row.id);
