@@ -18,3 +18,5 @@ If click 'Yes' make a request and delete the selected department then update the
 If click 'No' just close the modal window
 *The table columns should sortable
 *Above the table should have a search field that allows us to search by 'Department name'
+
+Ну жекос пися конечно...

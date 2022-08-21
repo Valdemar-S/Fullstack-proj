@@ -1,17 +1,34 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
 
+import { useEffect } from "react";
+import axios from "axios";
+
+import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
+
 export default function DepartmentsTable({ departments }) {
-  const [sortColumns, setSortColumns] = useState([]);
   const NONE = "none",
     ASC = "asc",
     DESC = "desc";
 
+  const [sortingColumn, setSortColumn] = useState("");
+
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios("http://localhost:5000/department")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err))
+      .finally((_) => {
+        setLoading(true);
+      });
+  }, []);
 
   function SortableColumn({ title, fieldName, updateSorting }) {
     const [sortingOrder, setSortingOrder] = useState(NONE);
-    const icon = "none";
 
     return (
       <th
@@ -32,79 +49,76 @@ export default function DepartmentsTable({ departments }) {
 
               updateSorting(fieldName, NONE);
               break;
+            default:
+              return;
           }
         }}
       >
         {title}
-        {icon}
+        {sortingColumn === fieldName ? (
+          sortingOrder === ASC ? (
+            <CaretUpFill />
+          ) : (
+            <CaretDownFill />
+          )
+        ) : (
+          ""
+        )}
       </th>
     );
   }
 
   const updateSorting = (fieldName, order) => {
-    if (sortColumns.length === 1 && order === NONE) {
-      // Sort to default if all columns unselected
+    if (order === NONE) {
+      // Sort to default if all columns unselected.
       setData(data.sort((a, b) => a.id > b.id));
-      setSortColumns([]);
+      setSortColumn("");
+    } else if (order === ASC) {
+      setData(data.sort((a, b) => a[fieldName] > b[fieldName]));
+    } else if (order === DESC) {
+      setData(data.sort((a, b) => a[fieldName] < b[fieldName]));
     }
-
-    setSortColumns((s) => s.filter((column) => column.fieldName !== fieldName)); // Remove column prev result
-
-    if (order !== NONE) {
-      setSortColumns((s) => {
-        s.push({ fieldName, order });
-        return s;
-      }); // Add new column sort state
-
-      // sorting
-      /*
-    setData(data => {
-      return data.sort((a,b => {
-        let result = true;
-        sortColumns.forEach(element => {
-          result = result && (a[element] > b[element])
-        });
-        
-      })) 
-    });
-    */
-    }
-
-    return (
-      <div>
-        <Table striped bordered>
-          <thead>
-            <tr>
-              <th>#</th>
-              <SortableColumn
-                title="Department Name"
-                fieldName="department_name"
-                updateSorting={updateSorting}
-              />
-              <SortableColumn
-                title="Department Head"
-                fieldName="department_head"
-                updateSorting={updateSorting}
-              />
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>HR</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>QA</td>
-              <td>-</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    );
+    setSortColumn(fieldName);
   };
+
+  return (
+    <div>
+      <Table striped bordered>
+        <thead>
+          <tr>
+            <SortableColumn
+              title="#"
+              fieldName="id"
+              updateSorting={updateSorting}
+            />
+            <SortableColumn
+              title="Department Name"
+              fieldName="name"
+              updateSorting={updateSorting}
+            />
+            <SortableColumn
+              title="Department Head"
+              fieldName="head"
+              updateSorting={updateSorting}
+            />
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading &&
+            data.map((row) => {
+              <tr>
+                <td>{row.id}</td>
+                <td>{row.name}</td>
+                <td>{row.head}</td>
+                <td>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>;
+            })}
+        </tbody>
+      </Table>
+    </div>
+  );
 }

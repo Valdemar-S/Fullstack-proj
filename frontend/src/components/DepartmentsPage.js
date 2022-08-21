@@ -1,5 +1,6 @@
 import AddDepartmentForm from "./AddDepartmentForm";
-import DepartmentsTable from './DepartmentsTable';
+import DepartmentsTable from "./DepartmentsTable";
+import EditDepartmentForm from "./EditDepartmentForm";
 import { useState } from "react";
 
 export default function DepartmentsPage(props) {
@@ -8,6 +9,7 @@ export default function DepartmentsPage(props) {
       <AddDepartmentForm />
 
       <DepartmentsTable />
+      <EditDepartmentForm />
     </div>
   );
 }
