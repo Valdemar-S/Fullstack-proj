@@ -13,7 +13,7 @@ export default function AddDepartmentForm() {
   const updateValidity = (event) => {
     const form = event.currentTarget;
     setValid(form.checkValidity() !== false);
-  }
+  };
 
   const handleSubmit = async (event) => {
     updateValidity(event);
@@ -24,7 +24,7 @@ export default function AddDepartmentForm() {
 
     setValidated(true);
 
-    if(valid)
+    if (valid)
       await axios.post("http://localhost:5000/department", {
         name: name,
         head: head,
@@ -32,7 +32,12 @@ export default function AddDepartmentForm() {
   };
 
   return (
-    <Form onChange={updateValidity} noValidate validated={validated} onSubmit={handleSubmit}>
+    <Form
+      onChange={updateValidity}
+      noValidate
+      validated={validated}
+      onSubmit={handleSubmit}
+    >
       <Form.Group className="mb-3" controlId="formName">
         <Form.Label>Department Name</Form.Label>
         <Form.Control
@@ -60,7 +65,7 @@ export default function AddDepartmentForm() {
           Please enter department head.
         </Form.Control.Feedback>
       </Form.Group>
-      <Button variant={valid ? "primary" : "secondary"} type="submit">
+      <Button variant={valid ? "success" : "secondary"} type="submit">
         Submit
       </Button>
     </Form>

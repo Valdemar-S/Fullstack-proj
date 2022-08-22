@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import FilterField from "./FilterField";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -13,7 +14,7 @@ export default function DepartmentsTable({ departments }) {
     DESC = "desc";
 
   const [sortingColumn, setSortColumn] = useState("");
-
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -44,9 +45,11 @@ export default function DepartmentsTable({ departments }) {
     return (
       <th
         onClick={() => {
+          console.log("sorting order in column:" + sortingOrder);
           switch (sortingOrder) {
             case NONE:
-              updateSorting(fieldName, ASC, () => setSortingOrder(NONE));
+              updateSorting(fieldName, ASC, () => setSortingOrder(ASC));
+              console.log("we set sorting asc");
               setSortingOrder(ASC);
               break;
             case ASC:
@@ -72,14 +75,16 @@ export default function DepartmentsTable({ departments }) {
         ) : (
           ""
         )}
+        {sortingColumn}
       </th>
     );
   }
 
   const updateSorting = (fieldName, order, resetSorting) => {
-    console.log(order);
+    console.log("sortingColumn:" + sortingColumn);
     if (fieldName !== sortingColumn) {
       resetSorting();
+      console.log("we RESETED sorting");
     }
     if (order === NONE) {
       // Sort to default if all columns unselected.
@@ -95,6 +100,7 @@ export default function DepartmentsTable({ departments }) {
         })
       );
       setSortColumn("");
+      console.log("we handled NONE sorting");
       return;
     } else if (order === ASC) {
       setData(
@@ -108,6 +114,7 @@ export default function DepartmentsTable({ departments }) {
           return 0;
         })
       );
+      console.log("we handled ASC sorting");
     } else if (order === DESC) {
       setData(
         data.sort((a, b) => {
@@ -120,11 +127,13 @@ export default function DepartmentsTable({ departments }) {
           return 0;
         })
       );
+      console.log("we handled DESC sorting");
     }
     setSortColumn(fieldName);
   };
   return (
     <div>
+      <FilterField setSearch={setSearch} />
       <Table striped bordered>
         <thead>
           <tr>
@@ -147,40 +156,45 @@ export default function DepartmentsTable({ departments }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => {
-            return (
-              <tr key={index}>
-                <td>{row.id}</td>
-                <td>{row.name}</td>
-                <td>{row.head}</td>
-                <td>
-                  <div>
-                    <EditDepartmentForm
-                      name={row.name}
-                      id={row.id}
-                      head={row.head}
-                      updateData={updateData}
-                    />
-                  </div>
-                </td>
-                <td>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Are you sure you wish to delete ${row.name} ?`
+          {console.log(data)}
+          {data
+            .filter((dep) =>
+              dep.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((row, index) => {
+              return (
+                <tr key={index}>
+                  <td>{row.id}</td>
+                  <td>{row.name}</td>
+                  <td>{row.head}</td>
+                  <td>
+                    <div>
+                      <EditDepartmentForm
+                        name={row.name}
+                        id={row.id}
+                        head={row.head}
+                        updateData={updateData}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            `Are you sure you wish to delete ${row.name} ?`
+                          )
                         )
-                      )
-                        deleteDepUser(row.id);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
+                          deleteDepUser(row.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
     </div>
