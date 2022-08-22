@@ -9,7 +9,6 @@ export default function DepartmentsPage(props) {
       <AddDepartmentForm />
 
       <DepartmentsTable />
-      <EditDepartmentForm />
     </div>
   );
 }

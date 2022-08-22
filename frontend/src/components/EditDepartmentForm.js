@@ -38,7 +38,7 @@ const EditDepartmentForm = () => {
     <div>
       <form onSubmit={updateDepartmentUser}>
         <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
+          Edit
         </Button>
 
         <Modal show={show} onHide={handleClose}>
