@@ -18,19 +18,24 @@ export default function DepartmentsTable({ departments }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    updateData();
+  }, []);
+
+  const updateData = () => {
     axios("http://localhost:5000/department")
       .then((res) => {
         setData(res.data);
-        console.log(data);
       })
       .catch((err) => console.log(err))
       .finally((_) => {
         setLoading(true);
       });
-  }, []);
+  };
 
-  const deleteDepUser = async (id) => {
-    await axios.delete(`http://localhost:5000/department/${id}`);
+  const deleteDepUser = (id) => {
+    axios.delete(`http://localhost:5000/department/${id}`).finally((_) => {
+      updateData();
+    });
   };
 
   function SortableColumn({ title, fieldName, updateSorting }) {
@@ -41,20 +46,16 @@ export default function DepartmentsTable({ departments }) {
         onClick={() => {
           switch (sortingOrder) {
             case NONE:
+              updateSorting(fieldName, ASC, () => setSortingOrder(NONE));
               setSortingOrder(ASC);
-              // update icon
-
-              updateSorting(fieldName, ASC);
               break;
             case ASC:
+              updateSorting(fieldName, DESC, () => setSortingOrder(NONE));
               setSortingOrder(DESC);
-
-              updateSorting(fieldName, DESC);
               break;
             case DESC:
+              updateSorting(fieldName, NONE, () => setSortingOrder(NONE));
               setSortingOrder(NONE);
-
-              updateSorting(fieldName, NONE);
               break;
             default:
               return;
@@ -75,8 +76,10 @@ export default function DepartmentsTable({ departments }) {
     );
   }
 
-  const updateSorting = (fieldName, order) => {
-    if (sortingColumn !== fieldName) {
+  const updateSorting = (fieldName, order, resetSorting) => {
+    console.log(order);
+    if (fieldName !== sortingColumn) {
+      resetSorting();
     }
     if (order === NONE) {
       // Sort to default if all columns unselected.
@@ -120,7 +123,6 @@ export default function DepartmentsTable({ departments }) {
     }
     setSortColumn(fieldName);
   };
-  //я на мин 15 отойду
   return (
     <div>
       <Table striped bordered>
@@ -153,7 +155,12 @@ export default function DepartmentsTable({ departments }) {
                 <td>{row.head}</td>
                 <td>
                   <div>
-                    <EditDepartmentForm />
+                    <EditDepartmentForm
+                      name={row.name}
+                      id={row.id}
+                      head={row.head}
+                      updateData={updateData}
+                    />
                   </div>
                 </td>
                 <td>
