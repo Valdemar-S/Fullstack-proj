@@ -12,7 +12,7 @@ import EditDepartmentForm from "./EditDepartmentForm";
 export default function DepartmentsTable() {
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [resetFuncs, setResetFuncs] = useState([]);
 
@@ -124,7 +124,7 @@ export default function DepartmentsTable() {
               setResetSortOrderFunc={addFunc}
               removeResetSortOrderFunc={removeFunc}
             />
-            <th colSpan="2">Action</th>
+            <th colSpan="2">Actions</th>
           </tr>
         </thead>
         <tbody>

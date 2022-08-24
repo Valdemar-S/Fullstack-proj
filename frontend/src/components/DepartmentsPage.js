@@ -1,7 +1,7 @@
 import AddDepartmentForm from "./AddDepartmentForm";
 import DepartmentsTable from "./DepartmentsTable";
 import Navbar from "./Navbar";
-export default function DepartmentsPage(props) {
+export default function DepartmentsPage() {
   return (
     <div>
       <Navbar />

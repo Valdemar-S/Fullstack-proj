@@ -1,3 +1,4 @@
+import EmployeesTable from "./EmployeesTable";
 import AddEmployeesForm from "./AddEmployeesForm";
 import Navbar from "./Navbar";
 const EmployeesPage = () => {
@@ -6,6 +7,7 @@ const EmployeesPage = () => {
       <Navbar />
       <h2>EmployeesPage</h2>
       <AddEmployeesForm />
+      <EmployeesTable />
     </div>
   );
 };
