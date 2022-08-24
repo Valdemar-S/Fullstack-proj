@@ -4,19 +4,22 @@ import Button from "react-bootstrap/Button";
 import FilterField from "./FilterField";
 import { useEffect } from "react";
 import axios from "axios";
+import SortableColumn from "./common/SortableColumn";
 
-import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import EditDepartmentForm from "./EditDepartmentForm";
 
-export default function DepartmentsTable({ departments }) {
-  const NONE = "none",
-    ASC = "asc",
-    DESC = "desc";
+/*
+  NONE = 0
+  ASC = 1
+  DESC = 2
+*/
+export default function DepartmentsTable() {
 
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [resetFuncs, setResetFuncs] = useState([]);
 
   useEffect(() => {
     updateData();
@@ -39,57 +42,17 @@ export default function DepartmentsTable({ departments }) {
     });
   };
 
-  function SortableColumn({ title, fieldName, updateSorting }) {
-    const [sortingOrder, setSortingOrder] = useState(NONE);
-
-    return (
-      <th
-        onClick={() => {
-          console.log("sorting order in column:" + sortingOrder);
-          switch (sortingOrder) {
-            case NONE:
-              updateSorting(fieldName, ASC, () => setSortingOrder(ASC));
-              console.log("we set sorting asc");
-              setSortingOrder(ASC);
-              break;
-            case ASC:
-              updateSorting(fieldName, DESC, () => setSortingOrder(NONE));
-              setSortingOrder(DESC);
-              break;
-            case DESC:
-              updateSorting(fieldName, NONE, () => setSortingOrder(NONE));
-              setSortingOrder(NONE);
-              break;
-            default:
-              return;
-          }
-        }}
-      >
-        {title}
-        {sortingColumn === fieldName ? (
-          sortingOrder === ASC ? (
-            <CaretUpFill />
-          ) : (
-            <CaretDownFill />
-          )
-        ) : (
-          ""
-        )}
-        {sortingColumn}
-      </th>
-    );
-  }
-
-  const updateSorting = (fieldName, order, resetSorting) => {
-    console.log("sortingColumn:" + sortingColumn);
+  const updateSorting = (fieldName, order) => {
     if (fieldName !== sortingColumn) {
-      resetSorting();
-      console.log("we RESETED sorting");
+      resetFuncs.forEach(el => {
+        if(el.fieldName !== fieldName)
+          el.resetFunc();
+      })
     }
-    if (order === NONE) {
+    if (order === 0) {
       // Sort to default if all columns unselected.
-      setData(
-        data.sort((a, b) => {
+      setData((data) =>
+        [...data].sort((a, b) => {
           if (a["id"] < b["id"]) {
             return -1;
           }
@@ -100,11 +63,10 @@ export default function DepartmentsTable({ departments }) {
         })
       );
       setSortColumn("");
-      console.log("we handled NONE sorting");
       return;
-    } else if (order === ASC) {
-      setData(
-        data.sort((a, b) => {
+    } else if (order === 1) {
+      setData((data) =>
+        [...data].sort((a, b) => {
           if (a[fieldName] < b[fieldName]) {
             return -1;
           }
@@ -114,10 +76,9 @@ export default function DepartmentsTable({ departments }) {
           return 0;
         })
       );
-      console.log("we handled ASC sorting");
-    } else if (order === DESC) {
-      setData(
-        data.sort((a, b) => {
+    } else if (order === 2) {
+      setData((data) =>
+        [...data].sort((a, b) => {
           if (a[fieldName] > b[fieldName]) {
             return -1;
           }
@@ -127,10 +88,22 @@ export default function DepartmentsTable({ departments }) {
           return 0;
         })
       );
-      console.log("we handled DESC sorting");
     }
     setSortColumn(fieldName);
   };
+
+  function addFunc(val) {
+    setResetFuncs((s) => {
+      return [...s, val]
+    });
+  }
+
+  function removeFunc(fieldName) {
+    setResetFuncs((s) => {
+      return s.filter(el => el.fieldName !== fieldName)
+    });
+  }
+
   return (
     <div>
       <FilterField setSearch={setSearch} />
@@ -141,22 +114,27 @@ export default function DepartmentsTable({ departments }) {
               title="#"
               fieldName="id"
               updateSorting={updateSorting}
+              setResetSortOrderFunc={addFunc}
+              removeResetSortOrderFunc={removeFunc}
             />
             <SortableColumn
               title="Department Name"
               fieldName="name"
               updateSorting={updateSorting}
+              setResetSortOrderFunc={addFunc}
+              removeResetSortOrderFunc={removeFunc}
             />
             <SortableColumn
               title="Department Head"
               fieldName="head"
               updateSorting={updateSorting}
+              setResetSortOrderFunc={addFunc}
+              removeResetSortOrderFunc={removeFunc}
             />
             <th colSpan="2">Action</th>
           </tr>
         </thead>
         <tbody>
-          {console.log(data)}
           {data
             .filter((dep) =>
               dep.name.toLowerCase().includes(search.toLowerCase())
