@@ -5,16 +5,11 @@ import FilterField from "./FilterField";
 import { useEffect } from "react";
 import axios from "axios";
 import SortableColumn from "./common/SortableColumn";
+import React from "react";
 
 import EditDepartmentForm from "./EditDepartmentForm";
 
-/*
-  NONE = 0
-  ASC = 1
-  DESC = 2
-*/
 export default function DepartmentsTable() {
-
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -44,13 +39,11 @@ export default function DepartmentsTable() {
 
   const updateSorting = (fieldName, order) => {
     if (fieldName !== sortingColumn) {
-      resetFuncs.forEach(el => {
-        if(el.fieldName !== fieldName)
-          el.resetFunc();
-      })
+      resetFuncs.forEach((el) => {
+        if (el.fieldName !== fieldName) el.resetFunc();
+      });
     }
     if (order === 0) {
-      // Sort to default if all columns unselected.
       setData((data) =>
         [...data].sort((a, b) => {
           if (a["id"] < b["id"]) {
@@ -94,13 +87,13 @@ export default function DepartmentsTable() {
 
   function addFunc(val) {
     setResetFuncs((s) => {
-      return [...s, val]
+      return [...s, val];
     });
   }
 
   function removeFunc(fieldName) {
     setResetFuncs((s) => {
-      return s.filter(el => el.fieldName !== fieldName)
+      return s.filter((el) => el.fieldName !== fieldName);
     });
   }
 
