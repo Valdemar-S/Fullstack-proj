@@ -5,7 +5,7 @@ const EmployeesPage = () => {
   return (
     <div>
       <Navbar />
-      <h2>EmployeesPage</h2>
+      <h2>Employees Page</h2>
       <AddEmployeesForm />
       <EmployeesTable />
     </div>

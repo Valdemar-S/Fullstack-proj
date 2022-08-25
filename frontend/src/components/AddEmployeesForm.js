@@ -9,7 +9,7 @@ const AddEmployeesForm = () => {
   const [startDate, setStartDate] = useState(new Date());
 
   const [name, setName] = useState("");
-  const [head, setHead] = useState("");
+  const [email, setEmail] = useState("");
 
   const [validated, setValidated] = useState(false);
   const [valid, setValid] = useState(false);
@@ -29,9 +29,9 @@ const AddEmployeesForm = () => {
     setValidated(true);
 
     if (valid)
-      await axios.post("http://localhost:5000/department", {
+      await axios.post("http://localhost:5000/employees", {
         name: name,
-        head: head,
+        email: email,
       });
   };
   return (
@@ -56,35 +56,37 @@ const AddEmployeesForm = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formHead">
+        <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
             required
             type="text"
-            value={head}
+            value={email}
             placeholder="Email"
-            onChange={(e) => setHead(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Control.Feedback type="invalid">
             Please enter email.
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Select aria-label="Default select example">
+        <Form.Label>Department</Form.Label>
+        <Form.Select required aria-label="Default select example">
           <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
         </Form.Select>
 
-        <Form.Group className="mb-3" controlId="formHead">
-          <Form.Label>Email</Form.Label>
-          <Form.Control disabled placeholder="Head of department" />
+        <Form.Label>Head of Department</Form.Label>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Control disabled placeholder="{head is here}" />
           <Form.Control.Feedback type="invalid">
             Please enter email.
           </Form.Control.Feedback>
         </Form.Group>
 
+        <Form.Label>Start date</Form.Label>
         <DatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date)}

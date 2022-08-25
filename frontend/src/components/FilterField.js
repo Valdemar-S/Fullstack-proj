@@ -11,7 +11,7 @@ export default function FilterField(props) {
         onChange={(e) => props.setSearch(e.target.value)}
       />
       <Form.Text id="SearchHelpBlock" muted>
-        Find Department by Name
+        Find some information in the table by Name
       </Form.Text>
     </div>
   );

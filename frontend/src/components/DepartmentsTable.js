@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import axios from "axios";
 import SortableColumn from "./common/SortableColumn";
 import React from "react";
-
 import EditDepartmentForm from "./EditDepartmentForm";
 
 export default function DepartmentsTable() {
