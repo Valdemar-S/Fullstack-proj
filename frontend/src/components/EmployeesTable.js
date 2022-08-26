@@ -20,7 +20,7 @@ const EmpoyeesTable = () => {
   }, []);
 
   const updateData = () => {
-    axios("http://localhost:5000/department")
+    axios("http://localhost:5000/employees")
       .then((res) => {
         setData(res.data);
       })
@@ -31,7 +31,7 @@ const EmpoyeesTable = () => {
   };
 
   const deleteEmployeesUser = (id) => {
-    axios.delete(`http://localhost:5000/department/${id}`).finally((_) => {
+    axios.delete(`http://localhost:5000/employees/${id}`).finally((_) => {
       updateData();
     });
   };
@@ -149,9 +149,9 @@ const EmpoyeesTable = () => {
               return (
                 <tr key={index}>
                   <td>{row.name}</td>
-                  <td>{row.name}</td>
-                  <td>{row.head}</td>
-                  <td>{row.head}</td>
+                  <td>{row.email}</td>
+                  <td>{row.departments_id}</td>
+                  <td>{row.date}</td>
                   <td>{row.head}</td>
                   <div>
                     <EditEmployeesForm

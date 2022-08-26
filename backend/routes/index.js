@@ -15,18 +15,20 @@ import {
   deleteEmployeesUsers,
 } from "../controllers/employees.js";
 
-const router = express.Router();
+const departmentRouter = express.Router();
 
-router.get("/", getAllDepUsers);
-router.get("/:id", getDepUsersById);
-router.post("/", createDepUsers);
-router.patch("/:id", updateDepUsers);
-router.delete("/:id", deleteDepUsers);
+departmentRouter.get("/", getAllDepUsers);
+departmentRouter.get("/:id", getDepUsersById);
+departmentRouter.post("/", createDepUsers);
+departmentRouter.patch("/:id", updateDepUsers);
+departmentRouter.delete("/:id", deleteDepUsers);
 
-router.get("/", getAllEmployeesUsers);
-router.get("/:id", getEmployeesUsersById);
-router.post("/", createEmployeesUsers);
-router.patch("/:id", updateEmployeesUsers);
-router.delete("/:id", deleteEmployeesUsers);
+const employeesRouter = express.Router();
 
-export default router;
+employeesRouter.get("/", getAllEmployeesUsers);
+employeesRouter.get("/:id", getEmployeesUsersById);
+employeesRouter.post("/", createEmployeesUsers);
+employeesRouter.patch("/:id", updateEmployeesUsers);
+employeesRouter.delete("/:id", deleteEmployeesUsers);
+
+export { employeesRouter, departmentRouter };

@@ -1,6 +1,7 @@
 import express from "express";
 import db from "./config/database.js";
-import departmentRoutes from "./routes/index.js";
+import { departmentRouter } from "./routes/index.js";
+import { employeesRouter } from "./routes/index.js";
 import cors from "cors";
 
 const app = express();
@@ -14,6 +15,7 @@ try {
 
 app.use(cors());
 app.use(express.json());
-app.use("/department", departmentRoutes);
+app.use("/department", departmentRouter);
+app.use("/employees", employeesRouter);
 
 app.listen(5000, () => console.log("Server running at port 5000"));

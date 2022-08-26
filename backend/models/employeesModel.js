@@ -13,10 +13,10 @@ const EmployeesUsers = db.define(
       type: DataTypes.STRING,
     },
     date: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
     },
     departments_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
   },
   {
