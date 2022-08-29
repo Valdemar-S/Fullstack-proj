@@ -7,17 +7,19 @@ import DatePicker from "react-datepicker";
 
 const EditEmployeesForm = (props) => {
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
 
+  const [startDate, setStartDate] = useState(new Date());
+  const [type, setType] = useState("");
   const handleClose = () => {
     setShow(false);
   };
 
   const handleSave = async () => {
-    await axios.patch(`http://localhost:5000/department/${props.id}`, {
+    await axios.patch(`http://localhost:5000/employees/${props.id}`, {
       name: name,
-      head: head,
+      email: email,
+      startDate: startDate,
+      departments_id: type,
     });
     props.updateData();
     setShow(false);
@@ -25,7 +27,7 @@ const EditEmployeesForm = (props) => {
 
   const handleShow = () => setShow(true);
   const [name, setName] = useState(props.name);
-  const [head, setHead] = useState(props.head);
+  const [email, setEmail] = useState(props.email);
 
   return (
     <div>
@@ -68,12 +70,21 @@ const EditEmployeesForm = (props) => {
             </Form.Group>
 
             <Form.Label>Department</Form.Label>
-            <Form.Select required aria-label="Default select example">
+            <Form.Control
+              required
+              aria-label="Default select example"
+              as="select"
+              value={type}
+              onChange={(e) => {
+                console.log("e.target.value", e.target.value);
+                setType(e.target.value);
+              }}
+            >
               <option>1</option>
               <option>2</option>
               <option>3</option>
               <option>4</option>
-            </Form.Select>
+            </Form.Control>
 
             <Form.Label>Head of Department</Form.Label>
             <Form.Group className="mb-3" controlId="formEmail">

@@ -158,6 +158,7 @@ const EmpoyeesTable = () => {
                       name={row.name}
                       id={row.id}
                       head={row.head}
+                      email={row.email}
                       updateData={updateData}
                     />
                   </div>

@@ -4,13 +4,14 @@ import axios from "axios";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
 
 const AddEmployeesForm = () => {
   const [startDate, setStartDate] = useState(new Date());
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
+  const currentDate = new Date();
+  const [type, setType] = useState("");
   const [validated, setValidated] = useState(false);
   const [valid, setValid] = useState(false);
 
@@ -32,6 +33,8 @@ const AddEmployeesForm = () => {
       await axios.post("http://localhost:5000/employees", {
         name: name,
         email: email,
+        date: currentDate,
+        departments_id: type,
       });
   };
   return (
@@ -71,12 +74,21 @@ const AddEmployeesForm = () => {
         </Form.Group>
 
         <Form.Label>Department</Form.Label>
-        <Form.Select required aria-label="Default select example">
+        <Form.Control
+          required
+          aria-label="Default select example"
+          as="select"
+          value={type}
+          onChange={(e) => {
+            console.log("e.target.value", e.target.value);
+            setType(e.target.value);
+          }}
+        >
           <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
-        </Form.Select>
+        </Form.Control>
 
         <Form.Label>Head of Department</Form.Label>
         <Form.Group className="mb-3" controlId="formEmail">
