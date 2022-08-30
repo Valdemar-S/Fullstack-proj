@@ -1,19 +1,29 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Select from "react-select";
 
-const AddEmployeesForm = () => {
+const AddEmployeesForm = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const currentDate = new Date();
-  const [type, setType] = useState("");
+  const [head, setHead] = useState("");
+  const [departmentId, setDepartmentId] = useState(0);
   const [validated, setValidated] = useState(false);
   const [valid, setValid] = useState(false);
+  const [departments, setDepartments] = useState(props.departments);
+
+  useEffect(() => {
+    if (departments.length !== 0) {
+      const department = departments.find((element) => {
+        return +element.id === +departmentId;
+      });
+      if (department !== undefined && department !== null)
+        setHead(department.head);
+    }
+  }, [departmentId, departments]);
 
   const updateValidity = (event) => {
     const form = event.currentTarget;
@@ -33,8 +43,8 @@ const AddEmployeesForm = () => {
       await axios.post("http://localhost:5000/employees", {
         name: name,
         email: email,
-        date: currentDate,
-        departments_id: type,
+        date: startDate,
+        departments_id: departmentId,
       });
   };
   return (
@@ -78,24 +88,24 @@ const AddEmployeesForm = () => {
           required
           aria-label="Default select example"
           as="select"
-          value={type}
+          value={departmentId}
           onChange={(e) => {
             console.log("e.target.value", e.target.value);
-            setType(e.target.value);
+            setDepartmentId(e.target.value);
           }}
         >
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
+          {departments.map((row, index) => {
+            return (
+              <option value={row.id} key={index}>
+                {row.name}
+              </option>
+            );
+          })}
         </Form.Control>
 
         <Form.Label>Head of Department</Form.Label>
         <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Control disabled placeholder="{head is here}" />
-          <Form.Control.Feedback type="invalid">
-            Please enter email.
-          </Form.Control.Feedback>
+          <Form.Control value={head} disabled />
         </Form.Group>
 
         <Form.Label>Start date</Form.Label>

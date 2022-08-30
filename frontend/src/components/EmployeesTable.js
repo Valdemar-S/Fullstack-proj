@@ -8,7 +8,7 @@ import React from "react";
 import EditEmployeesForm from "./EditEmployeesForm";
 import FilterField from "./FilterField";
 
-const EmpoyeesTable = () => {
+const EmpoyeesTable = (props) => {
   const [data, setData] = useState([]);
   const [setLoading] = useState(false);
   const [resetFuncs, setResetFuncs] = useState([]);
@@ -151,8 +151,9 @@ const EmpoyeesTable = () => {
                   <td>{row.name}</td>
                   <td>{row.email}</td>
                   <td>{row.departments_id}</td>
-                  <td>{row.date}</td>
                   <td>{row.head}</td>
+                  <td>{row.date}</td>
+
                   <div>
                     <EditEmployeesForm
                       name={row.name}
