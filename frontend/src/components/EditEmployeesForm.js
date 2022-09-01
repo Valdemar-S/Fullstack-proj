@@ -22,6 +22,11 @@ const EditEmployeesForm = (props) => {
       });
       if (department !== undefined && department !== null)
         setHead(department.head);
+      else {
+        setHead("");
+      }
+    } else {
+      setHead("");
     }
   }, [departmentId, departments]);
 
@@ -91,6 +96,7 @@ const EditEmployeesForm = (props) => {
                 setDepartmentId(e.target.value);
               }}
             >
+              <option></option>
               {departments.map((row, index) => {
                 return (
                   <option value={row.id} key={index}>
