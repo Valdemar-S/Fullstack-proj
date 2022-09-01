@@ -10,10 +10,11 @@ import FilterField from "./FilterField";
 
 const EmpoyeesTable = (props) => {
   const [data, setData] = useState([]);
-  const [setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [resetFuncs, setResetFuncs] = useState([]);
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
+  const [departments, setDepartments] = useState(props.departments);
 
   useEffect(() => {
     updateData();
@@ -28,6 +29,30 @@ const EmpoyeesTable = (props) => {
       .finally((_) => {
         setLoading(true);
       });
+  };
+
+  const getDepartmentNameById = (departmentId) => {
+    if (departments.length !== 0) {
+      const department = departments.find((element) => {
+        return +element.id === +departmentId;
+      });
+      if (department !== undefined && department !== null)
+        return department.name;
+    } else {
+      return "";
+    }
+  };
+
+  const getDepartmentHeadById = (departmentId) => {
+    if (departments.length !== 0) {
+      const department = departments.find((element) => {
+        return +element.id === +departmentId;
+      });
+      if (department !== undefined && department !== null)
+        return department.head;
+    } else {
+      return "";
+    }
   };
 
   const deleteEmployeesUser = (id) => {
@@ -150,19 +175,19 @@ const EmpoyeesTable = (props) => {
                 <tr key={index}>
                   <td>{row.name}</td>
                   <td>{row.email}</td>
-                  <td>{row.departments_id}</td>
-                  <td>{row.head}</td>
-                  <td>{row.date}</td>
-
-                  <div>
+                  <td>{getDepartmentNameById(row.departments_id)}</td>
+                  <td>{getDepartmentHeadById(row.departments_id)}</td>
+                  <td>{new Date(row.date).toLocaleDateString("bg-BG")}</td>
+                  <td>
                     <EditEmployeesForm
                       name={row.name}
                       id={row.id}
                       head={row.head}
                       email={row.email}
                       updateData={updateData}
+                      departments={departments}
                     />
-                  </div>
+                  </td>
                   <td>
                     <Button
                       variant="danger"

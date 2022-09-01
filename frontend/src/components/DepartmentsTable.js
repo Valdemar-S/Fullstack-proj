@@ -11,7 +11,7 @@ import EditDepartmentForm from "./EditDepartmentForm";
 export default function DepartmentsTable() {
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
-  const [setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [resetFuncs, setResetFuncs] = useState([]);
 

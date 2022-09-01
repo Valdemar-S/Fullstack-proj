@@ -22,6 +22,11 @@ const AddEmployeesForm = (props) => {
       });
       if (department !== undefined && department !== null)
         setHead(department.head);
+      else {
+        setHead("");
+      }
+    } else {
+      setHead("");
     }
   }, [departmentId, departments]);
 
@@ -73,7 +78,7 @@ const AddEmployeesForm = (props) => {
           <Form.Label>Email</Form.Label>
           <Form.Control
             required
-            type="text"
+            type="email"
             value={email}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
@@ -94,6 +99,7 @@ const AddEmployeesForm = (props) => {
             setDepartmentId(e.target.value);
           }}
         >
+          <option></option>
           {departments.map((row, index) => {
             return (
               <option value={row.id} key={index}>

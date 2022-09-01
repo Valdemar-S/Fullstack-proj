@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,19 +7,30 @@ import DatePicker from "react-datepicker";
 
 const EditEmployeesForm = (props) => {
   const [show, setShow] = useState(false);
-
+  const [head, setHead] = useState("");
+  const [departments, setDepartments] = useState(props.departments);
   const [startDate, setStartDate] = useState(new Date());
-  const [type, setType] = useState("");
+  const [departmentId, setDepartmentId] = useState(0);
   const handleClose = () => {
     setShow(false);
   };
+
+  useEffect(() => {
+    if (departments.length !== 0) {
+      const department = departments.find((element) => {
+        return +element.id === +departmentId;
+      });
+      if (department !== undefined && department !== null)
+        setHead(department.head);
+    }
+  }, [departmentId, departments]);
 
   const handleSave = async () => {
     await axios.patch(`http://localhost:5000/employees/${props.id}`, {
       name: name,
       email: email,
       startDate: startDate,
-      departments_id: type,
+      departments_id: departmentId,
     });
     props.updateData();
     setShow(false);
@@ -59,7 +70,7 @@ const EditEmployeesForm = (props) => {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="email"
                 value={email}
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
@@ -74,24 +85,24 @@ const EditEmployeesForm = (props) => {
               required
               aria-label="Default select example"
               as="select"
-              value={type}
+              value={departmentId}
               onChange={(e) => {
                 console.log("e.target.value", e.target.value);
-                setType(e.target.value);
+                setDepartmentId(e.target.value);
               }}
             >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
+              {departments.map((row, index) => {
+                return (
+                  <option value={row.id} key={index}>
+                    {row.name}
+                  </option>
+                );
+              })}
             </Form.Control>
 
             <Form.Label>Head of Department</Form.Label>
             <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Control disabled placeholder="{head is here}" />
-              <Form.Control.Feedback type="invalid">
-                Please enter email.
-              </Form.Control.Feedback>
+              <Form.Control value={head} disabled />
             </Form.Group>
 
             <Form.Label>Start date</Form.Label>
