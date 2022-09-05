@@ -32,12 +32,7 @@ export default function AddDepartmentForm() {
   };
 
   return (
-    <Form
-      onChange={updateValidity}
-      noValidate
-      validated={validated}
-      onSubmit={handleSubmit}
-    >
+    <Form onChange={updateValidity} noValidate validated={validated}>
       <Form.Group className="mb-3" controlId="formName">
         <Form.Label>Department Name</Form.Label>
         <Form.Control
@@ -65,7 +60,7 @@ export default function AddDepartmentForm() {
           Please enter department head.
         </Form.Control.Feedback>
       </Form.Group>
-      <Button variant={valid ? "success" : "secondary"} type="submit">
+      <Button variant={valid ? "success" : "secondary"} onClick={handleSubmit}>
         Submit
       </Button>
     </Form>

@@ -5,22 +5,39 @@ import axios from "axios";
 import { useState, useEffect, Fragment } from "react";
 const EmployeesPage = () => {
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(0);
+  const [employees, setEmployees] = useState();
+
   useEffect(() => {
+    updateEmployees();
     updateData();
   }, []);
 
+  const updateEmployees = () => {
+    axios("http://localhost:5000/employees").then((res) => {
+      setEmployees(res.data);
+      setLoading((s) => s + 1);
+    });
+  };
+
   const dataComponents = (
     <Fragment>
-      <AddEmployeesForm departments={departments} />
-      <EmployeesTable departments={departments} />
+      <AddEmployeesForm
+        departments={departments}
+        updateEmployees={updateEmployees}
+      />
+      <EmployeesTable
+        departments={departments}
+        employees={employees}
+        updateEmployees={updateEmployees}
+      />
     </Fragment>
   );
 
   const updateData = () => {
     axios("http://localhost:5000/department").then((res) => {
       setDepartments(res.data);
-      setLoading(true);
+      setLoading((b) => b + 1);
     });
   };
 
@@ -28,7 +45,7 @@ const EmployeesPage = () => {
     <div>
       <Navbar />
       <h2>Employees Page</h2>
-      {loading && dataComponents}
+      {loading >= 2 && dataComponents}
     </div>
   );
 };

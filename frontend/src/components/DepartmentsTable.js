@@ -7,17 +7,18 @@ import axios from "axios";
 import SortableColumn from "./common/SortableColumn";
 import React from "react";
 import EditDepartmentForm from "./EditDepartmentForm";
+import DeleteDepartmentModalWindow from "./DeleteDepartmentModalWindow";
 
-export default function DepartmentsTable() {
+export default function DepartmentsTable(props) {
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(props.departments);
   const [resetFuncs, setResetFuncs] = useState([]);
 
   useEffect(() => {
-    updateData();
-  }, []);
+    setData(props.departments);
+  }, [props.departments]);
 
   const updateData = () => {
     axios("http://localhost:5000/department")
@@ -161,6 +162,7 @@ export default function DepartmentsTable() {
                     >
                       Delete
                     </Button>
+                    <DeleteDepartmentModalWindow id={row.id} />
                   </td>
                 </tr>
               );

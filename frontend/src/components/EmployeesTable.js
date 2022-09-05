@@ -7,9 +7,10 @@ import SortableColumn from "./common/SortableColumn";
 import React from "react";
 import EditEmployeesForm from "./EditEmployeesForm";
 import FilterField from "./FilterField";
+import DeleteEmployeesModalWindow from "./DeleteEmployeesModalWindow";
 
 const EmpoyeesTable = (props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(props.employees);
   const [loading, setLoading] = useState(false);
   const [resetFuncs, setResetFuncs] = useState([]);
   const [sortingColumn, setSortColumn] = useState("");
@@ -17,19 +18,8 @@ const EmpoyeesTable = (props) => {
   const [departments, setDepartments] = useState(props.departments);
 
   useEffect(() => {
-    updateData();
-  }, []);
-
-  const updateData = () => {
-    axios("http://localhost:5000/employees")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err))
-      .finally((_) => {
-        setLoading(true);
-      });
-  };
+    setData(props.employees);
+  }, [props.employees]);
 
   const getDepartmentNameById = (departmentId) => {
     if (departments.length !== 0) {
@@ -57,7 +47,7 @@ const EmpoyeesTable = (props) => {
 
   const deleteEmployeesUser = (id) => {
     axios.delete(`http://localhost:5000/employees/${id}`).finally((_) => {
-      updateData();
+      props.updateEmployees();
     });
   };
 
@@ -184,7 +174,7 @@ const EmpoyeesTable = (props) => {
                       id={row.id}
                       head={row.head}
                       email={row.email}
-                      updateData={updateData}
+                      updateData={props.updateEmployees}
                       departments={departments}
                     />
                   </td>
@@ -202,6 +192,7 @@ const EmpoyeesTable = (props) => {
                     >
                       Delete
                     </Button>
+                    <DeleteEmployeesModalWindow id={row.id} />
                   </td>
                 </tr>
               );

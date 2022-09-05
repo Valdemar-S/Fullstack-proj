@@ -45,21 +45,18 @@ const AddEmployeesForm = (props) => {
     setValidated(true);
 
     if (valid)
-      await axios.post("http://localhost:5000/employees", {
-        name: name,
-        email: email,
-        date: startDate,
-        departments_id: departmentId,
-      });
+      await axios
+        .post("http://localhost:5000/employees", {
+          name: name,
+          email: email,
+          date: startDate,
+          departments_id: departmentId,
+        })
+        .then(props.updateEmployees());
   };
   return (
     <div>
-      <Form
-        onChange={updateValidity}
-        noValidate
-        validated={validated}
-        onSubmit={handleSubmit}
-      >
+      <Form onChange={updateValidity} noValidate validated={validated}>
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Full Name</Form.Label>
           <Form.Control
@@ -120,7 +117,10 @@ const AddEmployeesForm = (props) => {
           onChange={(date) => setStartDate(date)}
         />
 
-        <Button variant={valid ? "success" : "secondary"} type="submit">
+        <Button
+          variant={valid ? "success" : "secondary"}
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </Form>

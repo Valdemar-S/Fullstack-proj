@@ -11,6 +11,7 @@ const EditEmployeesForm = (props) => {
   const [departments, setDepartments] = useState(props.departments);
   const [startDate, setStartDate] = useState(new Date());
   const [departmentId, setDepartmentId] = useState(0);
+  const [date] = useState();
   const handleClose = () => {
     setShow(false);
   };
@@ -36,6 +37,7 @@ const EditEmployeesForm = (props) => {
       email: email,
       startDate: startDate,
       departments_id: departmentId,
+      date: date,
     });
     props.updateData();
     setShow(false);
@@ -113,6 +115,7 @@ const EditEmployeesForm = (props) => {
 
             <Form.Label>Start date</Form.Label>
             <DatePicker
+              value={date}
               selected={startDate}
               onChange={(date) => setStartDate(date)}
             />
