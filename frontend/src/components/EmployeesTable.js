@@ -160,9 +160,9 @@ const EmpoyeesTable = (props) => {
             .filter((emp) =>
               emp.name.toLowerCase().includes(search.toLowerCase())
             )
-            .map((row, index) => {
+            .map((row) => {
               return (
-                <tr key={index}>
+                <tr key={row.id}>
                   <td>{row.name}</td>
                   <td>{row.email}</td>
                   <td>{getDepartmentNameById(row.departments_id)}</td>
@@ -177,6 +177,7 @@ const EmpoyeesTable = (props) => {
                       updateData={props.updateEmployees}
                       departments={departments}
                       date={row.date}
+                      departments_id={row.departments_id}
                     />
                   </td>
                   <td>

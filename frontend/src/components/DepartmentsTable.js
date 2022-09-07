@@ -114,9 +114,9 @@ export default function DepartmentsTable(props) {
             .filter((dep) =>
               dep.name.toLowerCase().includes(search.toLowerCase())
             )
-            .map((row, index) => {
+            .map((row) => {
               return (
-                <tr key={index}>
+                <tr key={row.id}>
                   <td>{row.id}</td>
                   <td>{row.name}</td>
                   <td>{row.head}</td>

@@ -9,9 +9,12 @@ const EditEmployeesForm = (props) => {
   const [show, setShow] = useState(false);
   const [head, setHead] = useState("");
   const [departments, setDepartments] = useState(props.departments);
-  const [startDate, setStartDate] = useState(new Date());
-  const [departmentId, setDepartmentId] = useState(0);
-  const [date] = useState();
+  const [departmentId, setDepartmentId] = useState(props.departments_id);
+  const [date, setDate] = useState(new Date(props.date));
+  const [name, setName] = useState(props.name);
+  const [email, setEmail] = useState(props.email);
+
+  const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
   };
@@ -35,17 +38,12 @@ const EditEmployeesForm = (props) => {
     await axios.patch(`http://localhost:5000/employees/${props.id}`, {
       name: name,
       email: email,
-      startDate: startDate,
       departments_id: departmentId,
       date: date,
     });
     props.updateData();
     setShow(false);
   };
-
-  const handleShow = () => setShow(true);
-  const [name, setName] = useState(props.name);
-  const [email, setEmail] = useState(props.email);
 
   return (
     <div>
@@ -116,8 +114,8 @@ const EditEmployeesForm = (props) => {
             <Form.Label>Start date</Form.Label>
             <DatePicker
               value={date}
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={date}
+              onChange={(d) => setDate(d)}
             />
           </Form>
         </Modal.Body>
