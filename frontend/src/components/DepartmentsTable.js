@@ -12,30 +12,12 @@ import DeleteDepartmentModalWindow from "./DeleteDepartmentModalWindow";
 export default function DepartmentsTable(props) {
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState(props.departments);
   const [resetFuncs, setResetFuncs] = useState([]);
 
   useEffect(() => {
     setData(props.departments);
   }, [props.departments]);
-
-  const updateData = () => {
-    axios("http://localhost:5000/department")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err))
-      .finally((_) => {
-        setLoading(true);
-      });
-  };
-
-  const deleteDepUser = (id) => {
-    axios.delete(`http://localhost:5000/department/${id}`).finally((_) => {
-      updateData();
-    });
-  };
 
   const updateSorting = (fieldName, order) => {
     if (fieldName !== sortingColumn) {
@@ -144,25 +126,16 @@ export default function DepartmentsTable(props) {
                         name={row.name}
                         id={row.id}
                         head={row.head}
-                        updateData={updateData}
+                        updateData={props.updateDepartments}
                       />
                     </div>
                   </td>
                   <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            `Are you sure you wish to delete ${row.name} ?`
-                          )
-                        )
-                          deleteDepUser(row.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <DeleteDepartmentModalWindow id={row.id} />
+                    <DeleteDepartmentModalWindow
+                      updateDepartments={props.updateDepartments}
+                      id={row.id}
+                      name={row.id}
+                    />
                   </td>
                 </tr>
               );

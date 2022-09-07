@@ -176,23 +176,11 @@ const EmpoyeesTable = (props) => {
                       email={row.email}
                       updateData={props.updateEmployees}
                       departments={departments}
+                      date={row.date}
                     />
                   </td>
                   <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            `Are you sure you wish to delete ${row.name} ?`
-                          )
-                        )
-                          deleteEmployeesUser(row.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <DeleteEmployeesModalWindow id={row.id} />
+                    <DeleteEmployeesModalWindow id={row.id} name={row.name} />
                   </td>
                 </tr>
               );

@@ -5,31 +5,22 @@ import axios from "axios";
 
 function DeleteDepartmentModalWindow(props) {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const deleteEmployeesUser = () => {
-    axios.delete(`http://localhost:5000/employees/${props.id}`).finally((_) => {
-      updateData();
-    });
-  };
-
-  const updateData = () => {
-    axios("http://localhost:5000/employees")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err))
+  const deleteDepartment = () => {
+    axios
+      .delete(`http://localhost:5000/department/${props.id}`)
       .finally((_) => {
-        setLoading(true);
+        props.updateDepartments();
+        handleClose();
       });
   };
+
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Delete(new)
+        Delete
       </Button>
 
       <Modal
@@ -41,12 +32,9 @@ function DeleteDepartmentModalWindow(props) {
         <Modal.Header closeButton>
           <Modal.Title>Delete department</Modal.Title>
         </Modal.Header>
-        <Modal.Body>И зачем тебе его удалять?</Modal.Body>
+        <Modal.Body>Are you sure you wish to delete {props.name}?</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="primary"
-            onClick={(deleteEmployeesUser, handleClose)}
-          >
+          <Button variant="primary" onClick={deleteDepartment}>
             Yes
           </Button>
           <Button variant="secondary" onClick={handleClose}>

@@ -10,7 +10,7 @@ const EmployeesPage = () => {
 
   useEffect(() => {
     updateEmployees();
-    updateData();
+    updateDepartments();
   }, []);
 
   const updateEmployees = () => {
@@ -34,7 +34,7 @@ const EmployeesPage = () => {
     </Fragment>
   );
 
-  const updateData = () => {
+  const updateDepartments = () => {
     axios("http://localhost:5000/department").then((res) => {
       setDepartments(res.data);
       setLoading((b) => b + 1);

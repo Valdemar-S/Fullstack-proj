@@ -31,7 +31,7 @@ function DeleteEmployeesModalWindow(props) {
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Delete(new)
+        Delete
       </Button>
 
       <Modal
@@ -43,7 +43,7 @@ function DeleteEmployeesModalWindow(props) {
         <Modal.Header closeButton>
           <Modal.Title>Delete employee</Modal.Title>
         </Modal.Header>
-        <Modal.Body>И зачем тебе его удалять?</Modal.Body>
+        <Modal.Body>Are you sure you wish to delete {props.name}?</Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={deleteEmployeesUser}>
             Yes
