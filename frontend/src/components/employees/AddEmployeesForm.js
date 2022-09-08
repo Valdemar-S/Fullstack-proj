@@ -52,7 +52,7 @@ const AddEmployeesForm = (props) => {
           date: startDate,
           departments_id: departmentId,
         })
-        .then(props.updateEmployees());
+        .then(() => props.updateEmployees());
   };
   return (
     <div>

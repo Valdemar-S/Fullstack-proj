@@ -8,10 +8,14 @@ export default function SortableColumn({
   updateSorting,
   setResetSortOrderFunc,
   removeResetSortOrderFunc,
+  isDefault,
 }) {
   const [sortingOrder, setSortingOrder] = useState(0);
 
   useEffect(() => {
+    if (isDefault) {
+      setSortingOrder(1);
+    }
     setResetSortOrderFunc({
       fieldName: fieldName,
       resetFunc: () => setSortingOrder(0),

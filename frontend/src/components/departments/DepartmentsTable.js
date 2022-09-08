@@ -91,6 +91,7 @@ export default function DepartmentsTable(props) {
               updateSorting={updateSorting}
               setResetSortOrderFunc={addFunc}
               removeResetSortOrderFunc={removeFunc}
+              isDefault={true}
             />
             <SortableColumn
               title="Department Name"
@@ -134,7 +135,7 @@ export default function DepartmentsTable(props) {
                     <DeleteDepartmentModalWindow
                       updateDepartments={props.updateDepartments}
                       id={row.id}
-                      name={row.id}
+                      name={row.name}
                     />
                   </td>
                 </tr>

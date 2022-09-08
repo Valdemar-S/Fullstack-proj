@@ -5,29 +5,17 @@ import axios from "axios";
 
 function DeleteEmployeesModalWindow(props) {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const deleteEmployeesUser = () => {
     console.log("kekw");
     axios.delete(`http://localhost:5000/employees/${props.id}`).finally((_) => {
+      props.updateEmployees();
       handleClose();
-      updateData();
     });
   };
 
-  const updateData = () => {
-    axios("http://localhost:5000/employees")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err))
-      .finally((_) => {
-        setLoading(true);
-      });
-  };
   return (
     <>
       <Button variant="danger" onClick={handleShow}>

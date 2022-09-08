@@ -16,7 +16,12 @@ const EmpoyeesTable = (props) => {
   const [departments, setDepartments] = useState(props.departments);
 
   useEffect(() => {
-    setData(props.employees);
+    let employeesWithDepartments = props.employees.map((empl) => {
+      empl.dep_head = getDepartmentHeadById(empl.departments_id);
+      empl.dep_name = getDepartmentNameById(empl.departments_id);
+      return empl;
+    });
+    setData(employeesWithDepartments);
   }, [props.employees]);
 
   const getDepartmentNameById = (departmentId) => {
@@ -41,12 +46,6 @@ const EmpoyeesTable = (props) => {
     } else {
       return "";
     }
-  };
-
-  const deleteEmployeesUser = (id) => {
-    axios.delete(`http://localhost:5000/employees/${id}`).finally((_) => {
-      props.updateEmployees();
-    });
   };
 
   const updateSorting = (fieldName, order) => {
@@ -116,6 +115,14 @@ const EmpoyeesTable = (props) => {
         <thead>
           <tr>
             <SortableColumn
+              title="#"
+              fieldName="id"
+              updateSorting={updateSorting}
+              setResetSortOrderFunc={addFunc}
+              removeResetSortOrderFunc={removeFunc}
+              isDefault={true}
+            />
+            <SortableColumn
               title="Full name"
               fieldName="name"
               updateSorting={updateSorting}
@@ -131,14 +138,14 @@ const EmpoyeesTable = (props) => {
             />
             <SortableColumn
               title="Department"
-              fieldName="department"
+              fieldName="dep_name"
               updateSorting={updateSorting}
               setResetSortOrderFunc={addFunc}
               removeResetSortOrderFunc={removeFunc}
             />
             <SortableColumn
               title="Head of Department"
-              fieldName="head"
+              fieldName="dep_head"
               updateSorting={updateSorting}
               setResetSortOrderFunc={addFunc}
               removeResetSortOrderFunc={removeFunc}
@@ -161,10 +168,11 @@ const EmpoyeesTable = (props) => {
             .map((row) => {
               return (
                 <tr key={row.id}>
+                  <td>{row.id}</td>
                   <td>{row.name}</td>
                   <td>{row.email}</td>
-                  <td>{getDepartmentNameById(row.departments_id)}</td>
-                  <td>{getDepartmentHeadById(row.departments_id)}</td>
+                  <td>{row.dep_name}</td>
+                  <td>{row.dep_head}</td>
                   <td>{new Date(row.date).toLocaleDateString("bg-BG")}</td>
                   <td>
                     <EditEmployeesForm
@@ -179,7 +187,11 @@ const EmpoyeesTable = (props) => {
                     />
                   </td>
                   <td>
-                    <DeleteEmployeesModalWindow id={row.id} name={row.name} />
+                    <DeleteEmployeesModalWindow
+                      id={row.id}
+                      name={row.name}
+                      updateEmployees={props.updateEmployees}
+                    />
                   </td>
                 </tr>
               );
