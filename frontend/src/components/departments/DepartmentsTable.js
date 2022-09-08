@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
 
-import FilterField from "../FilterField";
+import FilterField from "../common/FilterField";
 import { useEffect } from "react";
 
 import SortableColumn from "../common/SortableColumn";

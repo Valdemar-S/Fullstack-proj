@@ -2,8 +2,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useState } from "react";
+import { PersonPlus } from "react-bootstrap-icons";
 
-export default function AddDepartmentForm() {
+export default function AddDepartmentForm(props) {
   const [name, setName] = useState("");
   const [head, setHead] = useState("");
 
@@ -25,10 +26,12 @@ export default function AddDepartmentForm() {
     setValidated(true);
 
     if (valid)
-      await axios.post("http://localhost:5000/department", {
-        name: name,
-        head: head,
-      });
+      await axios
+        .post("http://localhost:5000/department", {
+          name: name,
+          head: head,
+        })
+        .then(() => props.updateDepartments());
   };
 
   return (

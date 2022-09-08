@@ -5,12 +5,11 @@ import axios from "axios";
 import SortableColumn from "../common/SortableColumn";
 import React from "react";
 import EditEmployeesForm from "./EditEmployeesForm";
-import FilterField from "../FilterField";
+import FilterField from "../common/FilterField";
 import DeleteEmployeesModalWindow from "./DeleteEmployeesModalWindow";
 
 const EmpoyeesTable = (props) => {
   const [data, setData] = useState(props.employees);
-  const [loading, setLoading] = useState(false);
   const [resetFuncs, setResetFuncs] = useState([]);
   const [sortingColumn, setSortColumn] = useState("");
   const [search, setSearch] = useState("");
