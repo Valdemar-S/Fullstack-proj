@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import FilterField from "./FilterField";
+
+import FilterField from "../FilterField";
 import { useEffect } from "react";
-import axios from "axios";
-import SortableColumn from "./common/SortableColumn";
+
+import SortableColumn from "../common/SortableColumn";
 import React from "react";
 import EditDepartmentForm from "./EditDepartmentForm";
 import DeleteDepartmentModalWindow from "./DeleteDepartmentModalWindow";

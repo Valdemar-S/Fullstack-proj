@@ -2,7 +2,6 @@ import AddDepartmentForm from "./AddDepartmentForm";
 import DepartmentsTable from "./DepartmentsTable";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "./Navbar";
 
 export default function DepartmentsPage() {
   const [departments, setDepartments] = useState([]);
@@ -20,9 +19,8 @@ export default function DepartmentsPage() {
 
   return (
     <div>
-      <Navbar />
       <h2>Departments page</h2>
-      <AddDepartmentForm />
+      <AddDepartmentForm updateDepartments={updateDepartments} />
       {loading && (
         <DepartmentsTable
           updateDepartments={updateDepartments}

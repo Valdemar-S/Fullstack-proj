@@ -2,11 +2,10 @@ import Table from "react-bootstrap/Table";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import SortableColumn from "./common/SortableColumn";
+import SortableColumn from "../common/SortableColumn";
 import React from "react";
 import EditEmployeesForm from "./EditEmployeesForm";
-import FilterField from "./FilterField";
+import FilterField from "../FilterField";
 import DeleteEmployeesModalWindow from "./DeleteEmployeesModalWindow";
 
 const EmpoyeesTable = (props) => {

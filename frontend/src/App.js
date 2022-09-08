@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Navbar from "./components/Navbar";
 
-import EmployeesPage from "./components/EmployeesPage";
-import DepartmentsPage from "./components/DepartmentsPage";
+import EmployeesPage from "./components/employees/EmployeesPage";
+import DepartmentsPage from "./components/departments/DepartmentsPage";
 
 function App() {
   return (
     <Router>
       <div>
+        <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
           <Route path="/DepartmentsPage" element={<DepartmentsPage />} />
           <Route path="/EmployeesPage" element={<EmployeesPage />} />
         </Routes>

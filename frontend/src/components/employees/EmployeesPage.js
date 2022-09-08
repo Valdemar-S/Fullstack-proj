@@ -1,6 +1,5 @@
 import EmployeesTable from "./EmployeesTable";
 import AddEmployeesForm from "./AddEmployeesForm";
-import Navbar from "./Navbar";
 import axios from "axios";
 import { useState, useEffect, Fragment } from "react";
 const EmployeesPage = () => {
@@ -43,7 +42,6 @@ const EmployeesPage = () => {
 
   return (
     <div>
-      <Navbar />
       <h2>Employees Page</h2>
       {loading >= 2 && dataComponents}
     </div>
