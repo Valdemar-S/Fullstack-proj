@@ -1,8 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import authHeader from "../../services/authHeader";
 import { useState } from "react";
-import { PersonPlus } from "react-bootstrap-icons";
 
 export default function AddDepartmentForm(props) {
   const [name, setName] = useState("");
@@ -30,6 +30,7 @@ export default function AddDepartmentForm(props) {
         .post("http://localhost:5000/department", {
           name: name,
           head: head,
+          headers: authHeader(),
         })
         .then(() => props.updateDepartments());
   };

@@ -1,19 +1,4 @@
-+)The form should have the following fields:
-+)- 'Full Name' - required
-+)- 'Email' - required
-)- 'Department' - required, dropdown field which contains all created departments( if there is no created yet should have a warning message that tells the user that should first create a new department
-)- 'Head of Department' - disabled field that is filled auto after selecting 'Department'
-)- 'Start Date' - if not selected date should use the current date
-+)Under the form should have 'Submit' button that should gray if the form is not filled correct and green if it is correct.
-)After clicking the button you should make API request and create a new department then should update the table below.
-)Below of the from should have table that containes all employees.
-+)The table should have the following columns: 'Full Name', 'Email', 'Department', 'Head of Department', 'Start date' and 'Actions'
-+)As the 'Actions' column should have two buttons 'Edit', 'Delete':
-+)If you click 'Edit' should appear a modal window that should contain populated form fields for the selected Department
-+)If you click Submit the modal window should close and the table should be updated
-+)If you click 'Delete' should open confirmation a modal window with a simple message 'Are you sure you want to delete {employee name}'
-+)There are two options 'Yes' and 'No'
-+)If click 'Yes' make a request and delete the selected department then update the table
-+)If click 'No' just close the modal window
-)*The table columns should sortable
-+)*Above the table should have a search field that allows us to search by 'Employee'
+1) Login/ Logout справа
+1) Расстояние между кнопками должно быть 10px
+1) Если не залогиненый, то книпка не нажимаетса...
+4) Логаут работает.

@@ -15,6 +15,9 @@ const EmployeesUsers = db.define(
     date: {
       type: DataTypes.DATE,
     },
+    password: {
+      type: DataTypes.STRING,
+    },
     departments_id: {
       type: DataTypes.INTEGER,
     },

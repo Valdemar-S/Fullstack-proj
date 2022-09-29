@@ -9,7 +9,6 @@ function DeleteEmployeesModalWindow(props) {
   const handleShow = () => setShow(true);
 
   const deleteEmployeesUser = () => {
-    console.log("kekw");
     axios.delete(`http://localhost:5000/employees/${props.id}`).finally((_) => {
       props.updateEmployees();
       handleClose();

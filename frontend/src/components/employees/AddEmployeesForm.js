@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import authHeader from "../../services/authHeader";
 
 const AddEmployeesForm = (props) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -46,12 +47,16 @@ const AddEmployeesForm = (props) => {
 
     if (valid)
       await axios
-        .post("http://localhost:5000/employees", {
-          name: name,
-          email: email,
-          date: startDate,
-          departments_id: departmentId,
-        })
+        .post(
+          "http://localhost:5000/employees",
+          {
+            name: name,
+            email: email,
+            date: startDate,
+            departments_id: departmentId,
+          },
+          { headers: authHeader() }
+        )
         .then(() => props.updateEmployees());
   };
   return (

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import DatePicker from "react-datepicker";
+import authHeader from "../../services/authHeader";
 
 const EditEmployeesForm = (props) => {
   const [show, setShow] = useState(false);
@@ -35,12 +36,16 @@ const EditEmployeesForm = (props) => {
   }, [departmentId, departments]);
 
   const handleSave = async () => {
-    await axios.patch(`http://localhost:5000/employees/${props.id}`, {
-      name: name,
-      email: email,
-      departments_id: departmentId,
-      date: date,
-    });
+    await axios.patch(
+      `http://localhost:5000/employees/${props.id}`,
+      {
+        name: name,
+        email: email,
+        departments_id: departmentId,
+        date: date,
+      },
+      { headers: authHeader() }
+    );
     props.updateData();
     setShow(false);
   };

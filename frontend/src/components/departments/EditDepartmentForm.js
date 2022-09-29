@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import authHeader from "../../services/authHeader";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
@@ -12,10 +13,14 @@ const EditDepartmentForm = (props) => {
   };
 
   const handleSave = async () => {
-    await axios.patch(`http://localhost:5000/department/${props.id}`, {
-      name: name,
-      head: head,
-    });
+    await axios.patch(
+      `http://localhost:5000/department/${props.id}`,
+      {
+        name: name,
+        head: head,
+      },
+      { headers: authHeader() }
+    );
     props.updateData();
     setShow(false);
   };

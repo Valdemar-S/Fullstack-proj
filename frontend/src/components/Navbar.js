@@ -5,6 +5,8 @@ const Navbar = () => {
       <h4>Navigation</h4>
       <Button href="/DepartmentsPage">Departments</Button>
       <Button href="/EmployeesPage">Employees</Button>
+      <Button href="/LoginPage">Login</Button>
+      <Button>Logout</Button>
     </div>
   );
 };

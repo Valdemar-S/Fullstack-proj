@@ -1,4 +1,5 @@
 import AddDepartmentForm from "./AddDepartmentForm";
+import authHeader from "../../services/authHeader";
 import DepartmentsTable from "./DepartmentsTable";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -11,10 +12,12 @@ export default function DepartmentsPage() {
   }, []);
 
   const updateDepartments = () => {
-    axios("http://localhost:5000/department").then((res) => {
-      setDepartments(res.data);
-      setLoading(true);
-    });
+    axios("http://localhost:5000/department", { headers: authHeader() }).then(
+      (res) => {
+        setDepartments(res.data);
+        setLoading(true);
+      }
+    );
   };
 
   return (

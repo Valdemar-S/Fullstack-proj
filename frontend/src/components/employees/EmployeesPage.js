@@ -1,5 +1,6 @@
 import EmployeesTable from "./EmployeesTable";
 import AddEmployeesForm from "./AddEmployeesForm";
+import authHeader from "../../services/authHeader";
 import axios from "axios";
 import { useState, useEffect, Fragment } from "react";
 const EmployeesPage = () => {
@@ -13,10 +14,12 @@ const EmployeesPage = () => {
   }, []);
 
   const updateEmployees = () => {
-    axios("http://localhost:5000/employees").then((res) => {
-      setEmployees(res.data);
-      setLoading((s) => s + 1);
-    });
+    axios("http://localhost:5000/employees", { headers: authHeader() }).then(
+      (res) => {
+        setEmployees(res.data);
+        setLoading((s) => s + 1);
+      }
+    );
   };
 
   const dataComponents = (
@@ -34,10 +37,12 @@ const EmployeesPage = () => {
   );
 
   const updateDepartments = () => {
-    axios("http://localhost:5000/department").then((res) => {
-      setDepartments(res.data);
-      setLoading((b) => b + 1);
-    });
+    axios("http://localhost:5000/department", { headers: authHeader() }).then(
+      (res) => {
+        setDepartments(res.data);
+        setLoading((b) => b + 1);
+      }
+    );
   };
 
   return (
