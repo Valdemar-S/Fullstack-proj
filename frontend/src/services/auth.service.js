@@ -11,6 +11,10 @@ const register = (username, email, password) => {
 };
 */
 
+const isLoginned = () => {
+  return localStorage.getItem("token") !== null;
+};
+
 const login = (email, password) => {
   return axios
     .post(API_URL + "login", {
@@ -29,4 +33,4 @@ const logout = () => {
   localStorage.removeItem("token");
 };
 
-export default login;
+export { login, logout, isLoginned };
